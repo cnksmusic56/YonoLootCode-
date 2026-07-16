@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Claim Your Voucher</title>
+    <style>
+        /* ---------- RESET & BASE ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0b0e1a 0%, #1a1f33 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 32px;
+            padding: 40px 30px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            transition: 0.3s;
+        }
+
+        /* ---------- HEADINGS ---------- */
+        .title {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+        .title span {
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle {
+            color: #aab;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+            border-bottom: 1px dashed rgba(255, 215, 0, 0.3);
+            padding-bottom: 15px;
+        }
+
+        /* ---------- UID SECTION ---------- */
+        .uid-section {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 60px;
+            padding: 6px 6px 6px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .uid-section input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 1rem;
+            width: 100%;
+            padding: 12px 0;
+        }
+        .uid-section input::placeholder {
+            color: #667;
+        }
+        .uid-section button {
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            border: none;
+            border-radius: 60px;
+            padding: 12px 28px;
+            font-weight: 700;
+            color: #0b0e1a;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+        .uid-section button:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 20px rgba(255, 210, 0, 0.4);
+        }
+        .uid-section button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* ---------- UID STATUS MESSAGE ---------- */
+        #uidStatus {
+            font-size: 0.9rem;
+            margin: 5px 0 15px 0;
+            min-height: 1.5em;
+            color: #ffd200;
+        }
+
+        /* ---------- CHANNELS SECTION (hidden initially) ---------- */
+        #channelsSection {
+            display: none;
+            margin-top: 25px;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .channels-title {
+            color: #ccd;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .channel-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .channel-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 10px 20px;
+            border-radius: 60px;
+            color: #dde;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .channel-btn:hover {
+            background: #0088cc;
+            border-color: #0088cc;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 136, 204, 0.3);
+        }
+        .channel-btn::before {
+            content: "📢";
+            font-size: 1rem;
+        }
+
+        /* ---------- CLAIM SECTION (below channels) ---------- */
+        #claimSection {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .confirm-check {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: #ccd;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        .confirm-check input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #ffd200;
+            cursor: pointer;
+        }
+
+        #claimBtn {
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            border: none;
+            border-radius: 60px;
+            padding: 14px 40px;
+            font-weight: 700;
+            color: #0b0e1a;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+        }
+        #claimBtn:hover:not(:disabled) {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(255, 210, 0, 0.3);
+        }
+        #claimBtn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* ---------- PROGRESS BAR ---------- */
+        .progress-wrap {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 60px;
+            height: 12px;
+            margin: 20px 0 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #f7971e, #ffd200);
+            border-radius: 60px;
+            transition: width 0.3s ease;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            color: #99a;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        /* ---------- FOOTER ---------- */
+        .footer-note {
+            margin-top: 20px;
+            font-size: 0.7rem;
+            color: #556;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Title -->
+    <div class="title">
+        🎉 CONGRATULATIONS <br />
+        YOU OWN A <span>₹5 BET VOUCHER</span> 🤩
+    </div>
+    <div class="subtitle">🔹 Enter your UID to verify 🔹</div>
+
+    <!-- UID Input + Check Button -->
+    <div class="uid-section">
+        <input type="text" id="uidInput" placeholder="Enter your UID..." />
+        <button id="checkUidBtn">CHECK UID</button>
+    </div>
+    <div id="uidStatus"></div>
+
+    <!-- Channels Section (hidden initially) -->
+    <div id="channelsSection">
+        <div class="channels-title">
+            ⚠️ Please join all channels below to continue
+        </div>
+        <div class="channel-grid">
+            <a href="https://t.me/yourchannel1" target="_blank" class="channel-btn">JOIN</a>
+            <a href="https://t.me/yourchannel2" target="_blank" class="channel-btn">JOIN</a>
+            <a href="https://t.me/yourchannel3" target="_blank" class="channel-btn">JOIN</a>
+            <a href="https://t.me/yourchannel4" target="_blank" class="channel-btn">JOIN</a>
+            <a href="https://t.me/yourchannel5" target="_blank" class="channel-btn">JOIN</a>
+            <a href="https://t.me/yourchannel6" target="_blank" class="channel-btn">JOIN</a>
+        </div>
+
+        <!-- Claim Section (below channels) -->
+        <div id="claimSection">
+            <div class="confirm-check">
+                <input type="checkbox" id="joinedCheck" />
+                <label for="joinedCheck">✅ I have joined all the above channels</label>
+            </div>
+            <button id="claimBtn" disabled>🎁 CLAIM VOUCHER</button>
+        </div>
+    </div>
+
+    <!-- Progress Bar (hidden initially, shown on claim) -->
+    <div id="progressWrap" style="display: none;">
+        <div class="progress-wrap">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-label">
+            <span>⏳ Processing...</span>
+            <span id="progressText">0%</span>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        ⚡ Only valid UIDs will be processed
+    </div>
+</div>
+
+<script>
+    // ----- DOM Elements -----
+    const uidInput = document.getElementById('uidInput');
+    const checkUidBtn = document.getElementById('checkUidBtn');
+    const uidStatus = document.getElementById('uidStatus');
+    const channelsSection = document.getElementById('channelsSection');
+    const joinedCheck = document.getElementById('joinedCheck');
+    const claimBtn = document.getElementById('claimBtn');
+    const progressWrap = document.getElementById('progressWrap');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+
+    // ----- UID Check (simulate) -----
+    checkUidBtn.addEventListener('click', function() {
+        const uid = uidInput.value.trim();
+
+        if (uid === '') {
+            uidStatus.textContent = '⚠️ Please enter your UID.';
+            uidStatus.style.color = '#ff6b6b';
+            return;
+        }
+
+        // Simulate checking UID (e.g., length > 3)
+        if (uid.length < 4) {
+            uidStatus.textContent = '❌ Invalid UID. Must be at least 4 characters.';
+            uidStatus.style.color = '#ff6b6b';
+            return;
+        }
+
+        // Success: UID is valid
+        uidStatus.textContent = '✅ UID verified successfully! Now join the channels below.';
+        uidStatus.style.color = '#51cf66';
+
+        // Show channels section with animation
+        channelsSection.style.display = 'block';
+
+        // Disable the check button to prevent re-check
+        checkUidBtn.disabled = true;
+        checkUidBtn.textContent = '✓ VERIFIED';
+        uidInput.disabled = true;
+    });
+
+    // ----- Enable Claim button only when checkbox is ticked -----
+    joinedCheck.addEventListener('change', function() {
+        claimBtn.disabled = !this.checked;
+    });
+
+    // ----- Claim Button (shows progress bar) -----
+    claimBtn.addEventListener('click', function() {
+        // Disable button and checkbox during processing
+        claimBtn.disabled = true;
+        joinedCheck.disabled = true;
+
+        // Show progress bar
+        progressWrap.style.display = 'block';
+
+        let progress = 0;
+        progressBar.style.width = '0%';
+        progressText.textContent = '0%';
+
+        const interval = setInterval(() => {
+            progress += 2;
+            if (progress >= 100) {
+                clearInterval(interval);
+                progress = 100;
+                progressBar.style.width = '100%';
+                progressText.textContent = '100%';
+                claimBtn.textContent = '✅ CLAIMED SUCCESSFULLY!';
+                claimBtn.style.background = '#51cf66';
+                claimBtn.style.color = '#fff';
+                alert('🎉 Voucher claimed successfully! Please check your Telegram.');
+                return;
+            }
+            progressBar.style.width = progress + '%';
+            progressText.textContent = progress + '%';
+        }, 150);
+    });
+</script>
+
+</body>
+</html>
